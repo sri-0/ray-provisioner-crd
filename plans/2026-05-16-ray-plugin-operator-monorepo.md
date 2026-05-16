@@ -22,7 +22,8 @@
 - `services/operator/cmd/operator`: operator process entry point.
 - `services/operator/cmd/api-server`: REST API process entry point.
 - `services/operator/config`: CRD, RBAC, and sample manifests.
-- `services/operator/helm/ray-plugin-operator`: Helm chart.
+- `services/operator/helm/ray-plugin-crds`: cluster-scoped CRD Helm chart.
+- `services/operator/helm/ray-plugin-operator`: namespace-scoped operator Helm chart.
 - `apps/management-ui`: Vite React plugin management UI.
 - `packages/ray-framework`: Python Ray orchestration framework skeleton.
 - `examples/plugins/csv-analyzer`: sample plugin repository layout.
@@ -80,12 +81,13 @@
 - Create: `services/operator/config/crd/bases/ray.provisioner.io_rayplugins.yaml`
 - Create: `services/operator/config/rbac/*.yaml`
 - Create: `services/operator/config/samples/rayplugin.yaml`
+- Create: `services/operator/helm/ray-plugin-crds/*`
 - Create: `services/operator/helm/ray-plugin-operator/*`
 
 - [ ] Add CRD manifest matching the Go type.
-- [ ] Add least-privilege RBAC for RayPlugin, RayCluster, ConfigMap, Events.
+- [ ] Add least-privilege namespace-scoped RBAC for RayPlugin, RayCluster, ConfigMap, Events, and leader election Leases.
 - [ ] Add sample plugin manifest.
-- [ ] Add Helm chart values for target namespace/ray cluster/name/images.
+- [ ] Add Helm chart values for target namespace, watch namespace, RayCluster name, and images.
 
 ## Task 6: Management UI
 

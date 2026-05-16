@@ -15,6 +15,8 @@ The correct model is:
 
 `RayPlugin` CRDs scale well because they are small Kubernetes objects. The operator watches them, reconciles them, and writes registry state. Kubernetes can handle thousands of small custom resources if the controller is written carefully.
 
+Namespace-scoped operator instances also scale operational ownership better than one cluster-wide operator. Each team can run an operator in its own namespace with namespaced RBAC, while platform admins install the CRDs once.
+
 Per-plugin CI also scales well. A plugin repo builds one image and applies one `RayPlugin` manifest. That keeps plugin releases isolated and avoids full-cluster image rebuilds.
 
 Disabled plugins scale well. A disabled plugin can remain present as a CRD and registry entry without running pods.
@@ -72,3 +74,5 @@ Before operating thousands of plugin definitions, add:
 Proceed with this architecture, but treat "one worker group per plugin" as a deployment policy for hot or isolation-sensitive plugins, not as a universal rule for all 1,000 plugins.
 
 The source-of-truth CRD scales to thousands. The runtime execution topology should be adaptive.
+
+Use the split install model for multi-team clusters: `ray-plugin-crds` is cluster-scoped and installed once by an admin; `ray-plugin-operator` is namespace-scoped and can be installed per team or environment without cluster-admin.

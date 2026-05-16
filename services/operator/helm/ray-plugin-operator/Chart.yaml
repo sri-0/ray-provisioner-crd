@@ -4,3 +4,5 @@ description: Operator and API for dynamically provisioning Ray plugin worker gro
 type: application
 version: 0.1.0
 appVersion: "0.1.0"
+annotations:
+  ray.provisioner.io/install-scope: namespace

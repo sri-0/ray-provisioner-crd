@@ -1,8 +1,11 @@
+{{- $namespace := .Values.namespace | default .Release.Namespace -}}
+{{- $watchNamespace := .Values.operator.watchNamespace | default $namespace -}}
+{{- $rayClusterNamespace := .Values.operator.rayClusterNamespace | default $watchNamespace -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Release.Name }}-operator
-  namespace: {{ .Values.namespace }}
+  namespace: {{ $namespace }}
 spec:
   replicas: {{ .Values.operator.replicas }}
   selector:
@@ -22,7 +25,8 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args:
             - --ray-cluster-name={{ .Values.operator.rayClusterName }}
-            - --ray-cluster-namespace={{ .Values.operator.rayClusterNamespace }}
+            - --ray-cluster-namespace={{ $rayClusterNamespace }}
+            - --watch-namespace={{ $watchNamespace }}
             - --registry-configmap={{ .Values.operator.registryConfigMap }}
           ports:
             - name: metrics

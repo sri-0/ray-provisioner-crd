@@ -1,0 +1,6 @@
+apiVersion: v2
+name: ray-plugin-crds
+description: Cluster-scoped CRDs for the Ray plugin provisioner.
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
