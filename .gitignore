@@ -3,6 +3,7 @@ dist/
 __pycache__/
 *.pyc
 .DS_Store
+.run/
 .env
 .env.*
 !.env.example
