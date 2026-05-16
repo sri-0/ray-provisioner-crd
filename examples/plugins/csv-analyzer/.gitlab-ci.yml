@@ -1,0 +1,19 @@
+stages:
+  - build
+  - deploy
+
+variables:
+  PLUGIN_NAME: csv-analyzer
+  IMAGE: "$CI_REGISTRY_IMAGE/$PLUGIN_NAME:$CI_COMMIT_SHA"
+
+build:
+  stage: build
+  script:
+    - docker build -t "$IMAGE" .
+    - docker push "$IMAGE"
+
+deploy:
+  stage: deploy
+  script:
+    - kubectl apply -f plugin.yaml
+    - kubectl patch rayplugin "$PLUGIN_NAME" -n ray-system --type merge -p "{\"spec\":{\"image\":\"$IMAGE\"}}"

@@ -1,0 +1,25 @@
+apiVersion: ray.provisioner.io/v1alpha1
+kind: RayPlugin
+metadata:
+  name: csv-analyzer
+  namespace: ray-system
+spec:
+  enabled: true
+  image: registry.example.com/plugins/csv-analyzer:v1.0.0
+  rayClusterRef:
+    name: raycluster
+    namespace: ray-system
+  workerGroup:
+    replicas: 2
+    minReplicas: 1
+    maxReplicas: 20
+    resources:
+      cpu: "2"
+      memory: 4Gi
+  plugin:
+    entrypoint: plugins.csv_analyzer.Plugin
+    dataTypes:
+      - text/csv
+      - application/csv
+    dependsOn: []
+    supportsDistributed: true

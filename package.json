@@ -1,0 +1,12 @@
+{
+  "name": "ray-crd-provisioner",
+  "private": true,
+  "workspaces": [
+    "apps/management-ui"
+  ],
+  "scripts": {
+    "ui:dev": "npm --workspace apps/management-ui run dev",
+    "ui:build": "npm --workspace apps/management-ui run build",
+    "ui:test": "npm --workspace apps/management-ui run test"
+  }
+}

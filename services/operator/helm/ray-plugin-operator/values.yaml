@@ -1,0 +1,20 @@
+namespace: ray-system
+
+image:
+  repository: registry.example.com/ray-plugin-operator
+  tag: latest
+  pullPolicy: IfNotPresent
+
+operator:
+  rayClusterName: raycluster
+  rayClusterNamespace: ray-system
+  registryConfigMap: ray-plugin-registry
+  replicas: 1
+
+apiServer:
+  enabled: true
+  replicas: 1
+  port: 8090
+
+serviceAccount:
+  name: ray-plugin-operator

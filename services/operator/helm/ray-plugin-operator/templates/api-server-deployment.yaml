@@ -1,0 +1,45 @@
+{{- if .Values.apiServer.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-api-server
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.apiServer.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ray-plugin-operator
+      app.kubernetes.io/component: api-server
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ray-plugin-operator
+        app.kubernetes.io/component: api-server
+    spec:
+      serviceAccountName: {{ .Values.serviceAccount.name }}
+      containers:
+        - name: api-server
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["/api-server"]
+          args:
+            - --addr=:{{ .Values.apiServer.port }}
+            - --namespace={{ .Values.namespace }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.apiServer.port }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-api-server
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    app.kubernetes.io/name: ray-plugin-operator
+    app.kubernetes.io/component: api-server
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+{{- end }}

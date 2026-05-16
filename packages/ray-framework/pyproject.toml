@@ -1,0 +1,8 @@
+[project]
+name = "ray-framework"
+version = "0.1.0"
+description = "Shared orchestration framework for Ray plugin execution."
+requires-python = ">=3.11"
+
+[tool.setuptools.packages.find]
+include = ["ray_framework*"]
